@@ -8,19 +8,24 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.table.*;
 import modelo.CargaMasiva;
+import modelo.Cliente;
 import modelo.GenerarPDF;
+import modelo.Producto;
 import modelo.Sucursal;
+import modelo.Vendedor;
+import modeloDAO.ClienteDAO;
+import modeloDAO.ProductoDAO;
 //import modeloDAO.ClienteDAO;
-//import modeloDAO.ProductoDAO;
 import modeloDAO.SucursalDAO;
+import modeloDAO.VendedorDAO;
 //import modeloDAO.VendedorDAO;
 
 public class Administrador extends javax.swing.JFrame {
 
-//    VendedorDAO dao = new VendedorDAO();
+    VendedorDAO daoV = new VendedorDAO();
     SucursalDAO daoS = new SucursalDAO();
-//    ProductoDAO daoP = new ProductoDAO();
-//    ClienteDAO daoC = new ClienteDAO();
+    ProductoDAO daoP = new ProductoDAO();
+    ClienteDAO daoC = new ClienteDAO();
     DefaultTableModel tabla;
     int fila = -1;
     GenerarPDF generarPDF = new GenerarPDF();
@@ -35,10 +40,10 @@ public class Administrador extends javax.swing.JFrame {
         //DISENIOS TODAVIA NO PREPARADO
 //        this.getContentPane().setBackground(new Color(242, 242, 242));
 //        jPVendedores.setBackground(new Color(242, 242, 242));
-//        cargarVendedores();
+        cargarVendedores();
         cargarSucursales();
-//        cargarProductos();
-//        cargarCliente();
+        cargarProductos();
+        cargarCliente();
     }
 
     @SuppressWarnings("unchecked")
@@ -254,6 +259,11 @@ public class Administrador extends javax.swing.JFrame {
         cargamasivaP.setContentAreaFilled(false);
         cargamasivaP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cargamasivaP.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn2.png"))); // NOI18N
+        cargamasivaP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargamasivaPActionPerformed(evt);
+            }
+        });
 
         actualizarP.setForeground(new java.awt.Color(255, 255, 255));
         actualizarP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn.png"))); // NOI18N
@@ -285,6 +295,11 @@ public class Administrador extends javax.swing.JFrame {
         pdfP.setContentAreaFilled(false);
         pdfP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         pdfP.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnLargo2.png"))); // NOI18N
+        pdfP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pdfPActionPerformed(evt);
+            }
+        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/d2.png"))); // NOI18N
 
@@ -385,6 +400,11 @@ public class Administrador extends javax.swing.JFrame {
         cargamasivaC.setContentAreaFilled(false);
         cargamasivaC.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cargamasivaC.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn2.png"))); // NOI18N
+        cargamasivaC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargamasivaCActionPerformed(evt);
+            }
+        });
 
         eliminarC.setForeground(new java.awt.Color(255, 255, 255));
         eliminarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn.png"))); // NOI18N
@@ -404,6 +424,11 @@ public class Administrador extends javax.swing.JFrame {
         pdfC.setContentAreaFilled(false);
         pdfC.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         pdfC.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btnLargo2.png"))); // NOI18N
+        pdfC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pdfCActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPClientesLayout = new javax.swing.GroupLayout(jPClientes);
         jPClientes.setLayout(jPClientesLayout);
@@ -513,6 +538,11 @@ public class Administrador extends javax.swing.JFrame {
         pdfV.setText("Exportar lista a PDF");
         pdfV.setContentAreaFilled(false);
         pdfV.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pdfV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pdfVActionPerformed(evt);
+            }
+        });
 
         cargamasivaV.setForeground(new java.awt.Color(255, 255, 255));
         cargamasivaV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn.png"))); // NOI18N
@@ -520,6 +550,11 @@ public class Administrador extends javax.swing.JFrame {
         cargamasivaV.setContentAreaFilled(false);
         cargamasivaV.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cargamasivaV.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn2.png"))); // NOI18N
+        cargamasivaV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargamasivaVActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPVendedoresLayout = new javax.swing.GroupLayout(jPVendedores);
         jPVendedores.setLayout(jPVendedoresLayout);
@@ -604,16 +639,33 @@ public class Administrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void eliminarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarVActionPerformed
-
+        fila = jTableVendedores.getSelectedRow();
+        if (jTableVendedores.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Elige una opcion para eliminar", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int codigo = Integer.parseInt(jTableVendedores.getValueAt(fila, 0).toString());
+            daoV.delete(codigo);
+            this.dispose();
+            Administrador administrador = new Administrador();
+            administrador.setVisible(true);
+            administrador.jTabbedPane2.setSelectedIndex(3);
+        }
     }//GEN-LAST:event_eliminarVActionPerformed
 
     private void actualizarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarVActionPerformed
-
+        fila = jTableVendedores.getSelectedRow();
+        if (jTableVendedores.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Elige una opcion para modificar", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int codigo = Integer.parseInt(jTableVendedores.getValueAt(fila, 0).toString());
+            this.dispose();
+            new ModificarVendedor(daoV.search(codigo)).setVisible(true);
+        }
     }//GEN-LAST:event_actualizarVActionPerformed
 
     private void crearVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearVActionPerformed
-//        this.dispose();
-//        new AgregarVendedor().setVisible(true);
+        this.dispose();
+        new AgregarVendedor().setVisible(true);
     }//GEN-LAST:event_crearVActionPerformed
 
     private void eliminarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarSActionPerformed
@@ -628,7 +680,6 @@ public class Administrador extends javax.swing.JFrame {
             administrador.setVisible(true);
             administrador.jTabbedPane2.setSelectedIndex(0);
         }
-
     }//GEN-LAST:event_eliminarSActionPerformed
 
     private void actualizarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarSActionPerformed
@@ -648,29 +699,63 @@ public class Administrador extends javax.swing.JFrame {
     }//GEN-LAST:event_crearSActionPerformed
 
     private void crearCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearCActionPerformed
-//        this.dispose();
-//        new AgregarCliente().setVisible(true);
+        this.dispose();
+        new AgregarCliente().setVisible(true);
     }//GEN-LAST:event_crearCActionPerformed
 
     private void actualizarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarCActionPerformed
-
+        fila = jTableClientes.getSelectedRow();
+        if (jTableClientes.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Elige una opcion para modificar", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int codigo = Integer.parseInt(jTableClientes.getValueAt(fila, 0).toString());
+            this.dispose();
+            new ModificarCliente(daoC.search(codigo)).setVisible(true);
+        }
     }//GEN-LAST:event_actualizarCActionPerformed
 
     private void eliminarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarCActionPerformed
-
+        fila = jTableClientes.getSelectedRow();
+        if (jTableClientes.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Elige una opcion para eliminar", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int codigo = Integer.parseInt(jTableClientes.getValueAt(fila, 0).toString());
+            daoC.delete(codigo);
+            this.dispose();
+            Administrador administrador = new Administrador();
+            administrador.setVisible(true);
+            administrador.jTabbedPane2.setSelectedIndex(2);
+        }
     }//GEN-LAST:event_eliminarCActionPerformed
 
     private void eliminarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarPActionPerformed
-
+        fila = jTableProductos.getSelectedRow();
+        if (jTableProductos.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Elige una opcion para eliminar", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int codigo = Integer.parseInt(jTableProductos.getValueAt(fila, 0).toString());
+            daoP.delete(codigo);
+            this.dispose();
+            Administrador administrador = new Administrador();
+            administrador.setVisible(true);
+            administrador.jTabbedPane2.setSelectedIndex(1);
+        }
     }//GEN-LAST:event_eliminarPActionPerformed
 
     private void actualizarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarPActionPerformed
-
+        fila = jTableProductos.getSelectedRow();
+        if (jTableProductos.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Elige una opcion para modificar", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int codigo = Integer.parseInt(jTableProductos.getValueAt(fila, 0).toString());
+            this.dispose();
+            new ModificarProducto(daoP.search(codigo)).setVisible(true);
+        }
     }//GEN-LAST:event_actualizarPActionPerformed
 
     private void crearPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearPActionPerformed
-//        this.dispose();
-//        new AgregarProducto().setVisible(true);
+        this.dispose();
+        new AgregarProducto().setVisible(true);
     }//GEN-LAST:event_crearPActionPerformed
 
     private void pdfSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfSActionPerformed
@@ -683,15 +768,15 @@ public class Administrador extends javax.swing.JFrame {
 //        }
 
         try {
-            generarPDF.generar_pdf();
+            generarPDF.generarPDFSucursales();
         } catch (Exception e) {
-            System.out.println("ERROR A GENERAR PDF: " + e);
+            System.out.println("ERROR A GENERAR PDF SUCURSALES: " + e);
         }
     }//GEN-LAST:event_pdfSActionPerformed
 
     private void cargaMasivaSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargaMasivaSActionPerformed
         try {
-            cargaMasiva.carga_masiva();
+            cargaMasiva.carga_masiva(0);
             this.dispose();
             Administrador administrador = new Administrador();
             administrador.setVisible(true);
@@ -699,8 +784,71 @@ public class Administrador extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error en carga masiva", "Alerta", JOptionPane.WARNING_MESSAGE);
             System.out.println("ERROR EN CARGA MASIVA: " + e);
-        }      
+        }
     }//GEN-LAST:event_cargaMasivaSActionPerformed
+
+    private void pdfPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfPActionPerformed
+        try {
+            generarPDF.generarPDFProductos();
+        } catch (Exception e) {
+            System.out.println("ERROR A GENERAR PDF PRODUCTOS: " + e);
+        }
+    }//GEN-LAST:event_pdfPActionPerformed
+
+    private void cargamasivaPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargamasivaPActionPerformed
+        try {
+            cargaMasiva.carga_masiva(1);
+            this.dispose();
+            Administrador administrador = new Administrador();
+            administrador.setVisible(true);
+            administrador.jTabbedPane2.setSelectedIndex(1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en carga masiva", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println("ERROR EN CARGA MASIVA: " + e);
+        }
+    }//GEN-LAST:event_cargamasivaPActionPerformed
+
+    private void pdfCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfCActionPerformed
+        try {
+            generarPDF.generarPDFClientes();
+        } catch (Exception e) {
+            System.out.println("ERROR A GENERAR PDF CLIENTES: " + e);
+        }
+    }//GEN-LAST:event_pdfCActionPerformed
+
+    private void cargamasivaCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargamasivaCActionPerformed
+        try {
+            cargaMasiva.carga_masiva(2);
+            this.dispose();
+            Administrador administrador = new Administrador();
+            administrador.setVisible(true);
+            administrador.jTabbedPane2.setSelectedIndex(2);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en carga masiva", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println("ERROR EN CARGA MASIVA: " + e);
+        }
+    }//GEN-LAST:event_cargamasivaCActionPerformed
+
+    private void pdfVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfVActionPerformed
+        try {
+            generarPDF.generarPDFVendedores();
+        } catch (Exception e) {
+            System.out.println("ERROR A GENERAR PDF VENDEDORES: " + e);
+        }
+    }//GEN-LAST:event_pdfVActionPerformed
+
+    private void cargamasivaVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargamasivaVActionPerformed
+        try {
+            cargaMasiva.carga_masiva(3);
+            this.dispose();
+            Administrador administrador = new Administrador();
+            administrador.setVisible(true);
+            administrador.jTabbedPane2.setSelectedIndex(3);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en carga masiva", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println("ERROR EN CARGA MASIVA: " + e);
+        }
+    }//GEN-LAST:event_cargamasivaVActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -792,18 +940,49 @@ public class Administrador extends javax.swing.JFrame {
     }
 
     public void cargarProductos() {
-//        jTableProductos.setModel(daoP.listar());
-//        jScrollPane3.setViewportView(jTableProductos);
+        String columnas[] = {"Codigo", "Nombre", "Descripcion", "Cantidad", "Precio"};
+        tabla = new DefaultTableModel(null, columnas);
+        for (Producto p : daoP.listar()) {
+            Object fila[] = new Object[6];
+            fila[0] = p.getCodigo();
+            fila[1] = p.getNombre();
+            fila[2] = p.getDescripcion();
+            fila[3] = p.getCantidad();
+            fila[4] = p.getPrecio();
+            tabla.addRow(fila);
+        }
+        jTableProductos.setModel(tabla);
     }
 
     public void cargarCliente() {
-//        jTableClientes.setModel(daoC.listar());
-//        jScrollPane4.setViewportView(jTableClientes);
+        String columnas[] = {"Codigo", "Nombre", "NIT", "Correo", "Genero"};
+        tabla = new DefaultTableModel(null, columnas);
+        for (Cliente c : daoC.listar()) {
+            Object fila[] = new Object[6];
+            fila[0] = c.getCodigo();
+            fila[1] = c.getNombre();
+            fila[2] = c.getNit();
+            fila[3] = c.getCorreo();
+            fila[4] = c.getGenero();
+            tabla.addRow(fila);
+        }
+        jTableClientes.setModel(tabla);
     }
 
     public void cargarVendedores() {
-//        jTableVendedores.setModel(dao.listar());
-//        jScrollPane1.setViewportView(jTableVendedores);
+        String columnas[] = {"Codigo", "Nombre", "Caja", "Ventas", "Genero", "Password"};
+        tabla = new DefaultTableModel(null, columnas);
+        for (Vendedor V : daoV.listar()) {
+            Object fila[] = new Object[7];
+            fila[0] = V.getCodigo();
+            fila[1] = V.getNombre();
+            fila[2] = V.getCaja();
+            fila[3] = V.getVentas();
+            fila[4] = V.getGenero();
+            fila[5] = V.getPassword();    
+            tabla.addRow(fila);
+        }
+        jTableVendedores.setModel(tabla);
 
         /*
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();

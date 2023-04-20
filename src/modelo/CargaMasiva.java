@@ -6,12 +6,19 @@ import java.text.ParseException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import modeloDAO.ClienteDAO;
+import modeloDAO.ProductoDAO;
 import modeloDAO.SucursalDAO;
+import modeloDAO.VendedorDAO;
+import vista.Vendedores;
 
 public class CargaMasiva {
 
     SucursalDAO daoS = new SucursalDAO();
-
+    ProductoDAO daoP = new ProductoDAO();
+    ClienteDAO daoC = new ClienteDAO();
+    VendedorDAO daoV = new VendedorDAO();
+    
     private String leerarchivo() {
         JFileChooser fc = new JFileChooser();
         JPanel datos = new JPanel();
@@ -54,21 +61,47 @@ public class CargaMasiva {
         return null;
     }
 
-    public void carga_masiva() throws FileNotFoundException, IOException, ParseException {
+    public void carga_masiva(int tipo) throws FileNotFoundException, IOException, ParseException {
         String archivo_retorno = leerarchivo();
         JsonParser parse = new JsonParser();
         JsonArray matriz = parse.parse(archivo_retorno).getAsJsonArray();
 
         for (int i = 0; i < matriz.size(); i++) {
             JsonObject object = matriz.get(i).getAsJsonObject();
-
-            int codigo = 0;
-            String nombre = object.get("nombre").getAsString();
-            String direccion = object.get("direccion").getAsString();
-            String correo = object.get("correo").getAsString();
-            String telefono = object.get("telefono").getAsString();
-            Sucursal suc = new Sucursal(codigo, nombre, direccion, correo, telefono);
-            daoS.add(suc);
+            if (tipo == 0) {
+                int codigo = 0;
+                String nombre = object.get("nombre").getAsString();
+                String direccion = object.get("direccion").getAsString();
+                String correo = object.get("correo").getAsString();
+                String telefono = object.get("telefono").getAsString();
+                Sucursal suc = new Sucursal(codigo, nombre, direccion, correo, telefono);
+                daoS.add(suc);
+            } else if (tipo == 1) {
+                int codigo = 0;
+                String nombre = object.get("nombre").getAsString();
+                String descripcion = object.get("descripcion").getAsString();
+                int cantidad = Integer.parseInt(object.get("cantidad").getAsString());
+                float precio = Float.parseFloat(object.get("precio").getAsString());
+                Producto pro = new Producto(codigo, nombre, descripcion, cantidad, precio);
+                daoP.add(pro);
+            } else if (tipo == 2) {
+                int codigo = 0;
+                String nombre = object.get("nombre").getAsString();
+                String nit = object.get("nit").getAsString();
+                String correo = object.get("correo").getAsString();
+                String genero = object.get("genero").getAsString();
+                Cliente cli = new Cliente(codigo, nombre, nit, correo, genero);
+                daoC.add(cli);
+            } else if (tipo == 3) {
+                int codigo = 0;
+                String nombre = object.get("nombre").getAsString();
+                int caja = Integer.parseInt(object.get("caja").getAsString());
+                int ventas = Integer.parseInt(object.get("ventas").getAsString());
+                String genero = object.get("genero").getAsString();
+                String password = object.get("password").getAsString();
+                Vendedor ven = new Vendedor(codigo, nombre, caja, ventas, genero, password);
+                daoV.add(ven);
+            }
         }
         JOptionPane.showMessageDialog(null, "Se hizo la carga masiva correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);
     }

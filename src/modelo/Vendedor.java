@@ -9,19 +9,17 @@ public class Vendedor implements Serializable{
     int ventas;
     String genero;
     String password;
-    boolean actvidad;
 
     public Vendedor() {
     }
 
-    public Vendedor(int codigo, String nombre, int caja, int ventas, String genero, String password, boolean actvidad) {
+    public Vendedor(int codigo, String nombre, int caja, int ventas, String genero, String password) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.caja = caja;
         this.ventas = ventas;
         this.genero = genero;
         this.password = password;
-        this.actvidad = actvidad;
     }
 
     public int getCodigo() {
@@ -63,20 +61,12 @@ public class Vendedor implements Serializable{
     public void setGenero(String genero) {
         this.genero = genero;
     }
-    
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isActvidad() {
-        return actvidad;
-    }
-
-    public void setActvidad(boolean actvidad) {
-        this.actvidad = actvidad;
-    }  
+    }   
 }

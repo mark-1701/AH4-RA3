@@ -468,6 +468,9 @@
                   <Image iconType="3" name="/img/btn2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cargamasivaPActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="actualizarP">
               <Properties>
@@ -522,6 +525,9 @@
                   <Image iconType="3" name="/img/btnLargo2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pdfPActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
@@ -723,6 +729,9 @@
                   <Image iconType="3" name="/img/btn2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cargamasivaCActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="eliminarC">
               <Properties>
@@ -758,6 +767,9 @@
                   <Image iconType="3" name="/img/btnLargo2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pdfCActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -968,6 +980,9 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pdfVActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="cargamasivaV">
               <Properties>
@@ -984,6 +999,9 @@
                   <Image iconType="3" name="/img/btn2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cargamasivaVActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

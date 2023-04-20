@@ -1,17 +1,19 @@
 package modeloDAO;
 
 import config.Conexion;
+import interfaces.CRUDSucursal;
 import java.sql.*;
 import java.util.LinkedList;
 import modelo.Sucursal;
 
-public class SucursalDAO {
+public class SucursalDAO implements CRUDSucursal{
     Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     Sucursal s = new Sucursal();
 
+    @Override
     public LinkedList<Sucursal> listar() {
         LinkedList<Sucursal> lista = new LinkedList<Sucursal>();
         String sql = "SELECT * FROM sucursales";
@@ -30,12 +32,12 @@ public class SucursalDAO {
                 lista.add(suc);
             }
         } catch (Exception e) {
-            System.out.println("ERROR LISTA: " + e);
+            System.out.println("ERROR LISTA SUCURSALES: " + e);
         }
         return lista;
-
     }
     
+    @Override
     public void add(Sucursal sucursal) {
         String query = "INSERT INTO sucursales VALUES (0,?,?,?,?);";
         try {
@@ -47,12 +49,12 @@ public class SucursalDAO {
             ps.setString(4, sucursal.getTelefono());
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("ERROR AGREGAR: " + e);
+            System.out.println("ERROR AGREGAR SUCURSAL: " + e);
         }
     }
-
     
-    public Sucursal search(int codigo){
+    @Override
+    public Sucursal search(int codigo) {
         String sql = "SELECT * FROM sucursales WHERE codigo = " + codigo;
         try {
             con = cn.Conectar();
@@ -70,8 +72,8 @@ public class SucursalDAO {
         }
         return s;  
     }
-
     
+    @Override
     public void edit(Sucursal sucursal) {
         String query = "UPDATE sucursales SET nombre=?, direccion=?, correo=?, telefono=? WHERE codigo=?;";
         try {
@@ -87,8 +89,8 @@ public class SucursalDAO {
             System.out.println("ERROR AL MODIFICAR SUCURSAL: " + e);
         }
     }
-
      
+    @Override
     public void delete(int codigo) {
         String sql = "DELETE from sucursales WHERE codigo=?";
         try {
@@ -99,6 +101,4 @@ public class SucursalDAO {
         } catch (Exception e) {
         }
     }  
-    
-
 }

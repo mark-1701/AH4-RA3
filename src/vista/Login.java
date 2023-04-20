@@ -15,7 +15,7 @@ public class Login extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Acceso al sistema");
         setLocationRelativeTo(null);
-        rsscalelabel.RSScaleLabel.setScaleLabel(labelLogo,"src/img/logoS.png"); 
+        rsscalelabel.RSScaleLabel.setScaleLabel(labelLogo, "src/img/logoS.png");
         jPanel1.setBackground(new Color(242, 242, 242));
         this.getContentPane().setBackground(new Color(217, 54, 54));
     }
@@ -126,26 +126,19 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        /*Para ingresar al sistema ventas, debera de entrar con un nombre 
-        y contrasena ya registrado*/
-
         usuario = txtUser.getText();
         password = txtPass.getText();
-
-        if (usuario.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No debes de dejar casillas vacias", "Alerta", JOptionPane.WARNING_MESSAGE);
-        } else {
-            if (usuario.equals("admin") && password.equals("admin")) {
-                new Administrador().setVisible(true);
-                this.setVisible(false);
-            } else {
-                if (l.serch(usuario, password)) {
-                    new Vendedores().setVisible(true);
-                    this.setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuario o Password incorrecto", "Alerta", JOptionPane.WARNING_MESSAGE);
-                }
-            }
+        String acceso = l.acceso(usuario, password);
+        if (txtUser.getText().isEmpty() || txtPass.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debes de rellenar todas las opciones", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else if (usuario.equals("admin") && password.equals("admin")) {
+            new Administrador().setVisible(true);
+            this.setVisible(false);
+        } else if (acceso.equalsIgnoreCase("encontrado")) {
+            new Vendedores().setVisible(true);
+            this.setVisible(false);
+        } else if (acceso.equalsIgnoreCase("no encontrado")) {
+            JOptionPane.showMessageDialog(null, "Correo o contraseña incorrecta", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
