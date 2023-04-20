@@ -1,5 +1,7 @@
 package vista;
 
+import modelo.LoginAccess;
+
 
 public class Vendedores extends javax.swing.JFrame {
 
@@ -7,8 +9,9 @@ public class Vendedores extends javax.swing.JFrame {
     public Vendedores() {
         initComponents();
         setResizable(false);
-        setTitle("Acceso al sistema");
+        setTitle("Acceso al sistema vendedores");
         setLocationRelativeTo(null);
+        labelNombre.setText("¡Bienvendio " + LoginAccess.nombre + "!");
     }
 
 
@@ -18,7 +21,7 @@ public class Vendedores extends javax.swing.JFrame {
 
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        labelNombre = new javax.swing.JLabel();
         jPNuevaVenta = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -69,7 +72,7 @@ public class Vendedores extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("¡Bienvendio NOMBRE DEL VENDEDOR!");
+        labelNombre.setText("¡Bienvendio NOMBRE DEL VENDEDOR!");
 
         jLabel16.setText("Seleccionar Cliente");
 
@@ -344,7 +347,7 @@ public class Vendedores extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(labelNombre)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -356,7 +359,7 @@ public class Vendedores extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jLabel1))
+                    .addComponent(labelNombre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNuevaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -416,7 +419,6 @@ public class Vendedores extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -451,5 +453,6 @@ public class Vendedores extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel labelNombre;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,30 +1,33 @@
 package modelo;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.LinkedList;
-import javax.swing.JOptionPane;
+import config.Conexion;
+import java.sql.*;
 
 public class LoginAccess {
 
-    LinkedList<Vendedor> lista = new LinkedList<Vendedor>();
-
-    public boolean serch(String nombre, String password) {
+    Conexion cn = new Conexion();
+    Connection con;
+    PreparedStatement ps;
+    ResultSet rs;
+    public static String nombre = "";
+    
+    public String acceso(String nombre, String password) {
+        String sql = "SELECT nombre FROM vendedores WHERE nombre = '" + nombre + "' AND password = '" + password + "'";
         try {
-            for (Vendedor v : lista) {
-                if (v.getNombre().equals(nombre) && v.getPassword().equals(password)) {
-                    return true;
-                }
+            con = cn.Conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                LoginAccess.nombre = rs.getString(1);
+                return "encontrado";
+            } else {
+                return "no encontrado";
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al encontrar vendedor", "Alerta", JOptionPane.WARNING_MESSAGE);
-            System.out.println("ERROR" + e);
+            System.out.println("ERROR EN LA CONSULTA ACCESO " + e);
         }
-
-        return false;
+        return null;
     }
+
 
 }
