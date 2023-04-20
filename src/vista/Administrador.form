@@ -468,6 +468,9 @@
                   <Image iconType="3" name="/img/btn2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cargamasivaPActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="actualizarP">
               <Properties>
@@ -522,6 +525,9 @@
                   <Image iconType="3" name="/img/btnLargo2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pdfPActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
