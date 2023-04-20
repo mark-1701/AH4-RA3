@@ -9,12 +9,15 @@ import javax.swing.JPanel;
 import modeloDAO.ClienteDAO;
 import modeloDAO.ProductoDAO;
 import modeloDAO.SucursalDAO;
+import modeloDAO.VendedorDAO;
+import vista.Vendedores;
 
 public class CargaMasiva {
 
     SucursalDAO daoS = new SucursalDAO();
     ProductoDAO daoP = new ProductoDAO();
     ClienteDAO daoC = new ClienteDAO();
+    VendedorDAO daoV = new VendedorDAO();
     
     private String leerarchivo() {
         JFileChooser fc = new JFileChooser();
@@ -89,6 +92,15 @@ public class CargaMasiva {
                 String genero = object.get("genero").getAsString();
                 Cliente cli = new Cliente(codigo, nombre, nit, correo, genero);
                 daoC.add(cli);
+            } else if (tipo == 3) {
+                int codigo = 0;
+                String nombre = object.get("nombre").getAsString();
+                int caja = Integer.parseInt(object.get("caja").getAsString());
+                int ventas = Integer.parseInt(object.get("ventas").getAsString());
+                String genero = object.get("genero").getAsString();
+                String password = object.get("password").getAsString();
+                Vendedor ven = new Vendedor(codigo, nombre, caja, ventas, genero, password);
+                daoV.add(ven);
             }
         }
         JOptionPane.showMessageDialog(null, "Se hizo la carga masiva correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);

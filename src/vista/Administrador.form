@@ -980,6 +980,9 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pdfVActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="cargamasivaV">
               <Properties>
@@ -996,6 +999,9 @@
                   <Image iconType="3" name="/img/btn2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cargamasivaVActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

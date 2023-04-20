@@ -9,12 +9,14 @@ import javax.swing.JOptionPane;
 import modeloDAO.ClienteDAO;
 import modeloDAO.ProductoDAO;
 import modeloDAO.SucursalDAO;
+import modeloDAO.VendedorDAO;
 
 public class GenerarPDF {
 
     SucursalDAO daoS = new SucursalDAO();
     ProductoDAO daoP = new ProductoDAO();
     ClienteDAO daoC = new ClienteDAO();
+    VendedorDAO daoV = new VendedorDAO();
 
     //MODELO PARA PDF SUCURSALES
     public void generarPDFSucursales() throws FileNotFoundException, DocumentException {
@@ -200,6 +202,74 @@ public class GenerarPDF {
         JOptionPane.showMessageDialog(null, "El archivo se creo correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);
         try {
             File sucursales_doc = new File("Clientes.pdf");
+            Desktop.getDesktop().open(sucursales_doc);
+        } catch (Exception e) {
+        }
+    }
+    
+    //MODELO PARA PDF VENDEDORES
+    public void generarPDFVendedores() throws FileNotFoundException, DocumentException {
+        FileOutputStream gen = new FileOutputStream("Vendedores.pdf");
+        Document documento = new Document();
+        PdfWriter.getInstance(documento, gen);
+        documento.open();
+        BaseColor color = new BaseColor(255, 255, 255); // Rojo
+        Font font = new Font(Font.FontFamily.UNDEFINED, 12, Font.NORMAL, color);
+        Paragraph parrafo = new Paragraph("Reporte de la tabla Vendedores");
+        parrafo.setAlignment(1);
+        documento.add(parrafo);
+        documento.add(new Paragraph("\n"));
+        String texto = "Toda la informacion es delicada y usted se compromete a la debida utilización.\n\n";
+        documento.add(new Paragraph(texto));
+
+        PdfPTable tabla = new PdfPTable(6);
+        tabla.setWidthPercentage(100);
+        tabla.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        PdfPCell codigo = new PdfPCell(new Phrase("Codigo", font));
+        codigo.setBackgroundColor(BaseColor.RED);
+        codigo.setHorizontalAlignment(Element.ALIGN_CENTER);
+        PdfPCell nombre = new PdfPCell(new Phrase("Nombre", font));
+        nombre.setBackgroundColor(BaseColor.RED);
+        nombre.setHorizontalAlignment(Element.ALIGN_CENTER);
+        PdfPCell caja = new PdfPCell(new Phrase("Caja", font));
+        caja.setBackgroundColor(BaseColor.RED);
+        caja.setHorizontalAlignment(Element.ALIGN_CENTER);
+        PdfPCell ventas = new PdfPCell(new Phrase("Ventas", font));
+        ventas.setBackgroundColor(BaseColor.RED);
+        ventas.setHorizontalAlignment(Element.ALIGN_CENTER);
+        PdfPCell genero = new PdfPCell(new Phrase("Genero", font));
+        genero.setBackgroundColor(BaseColor.RED);
+        genero.setHorizontalAlignment(Element.ALIGN_CENTER);
+        PdfPCell password = new PdfPCell(new Phrase("Password", font));
+        password.setBackgroundColor(BaseColor.RED);
+        password.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+        tabla.addCell(codigo);
+        tabla.addCell(nombre);
+        tabla.addCell(caja);
+        tabla.addCell(ventas);
+        tabla.addCell(genero);
+        tabla.addCell(password);
+
+        for (Vendedor v : daoV.listar()) {
+            tabla.addCell(String.valueOf(v.getCodigo()));
+            tabla.addCell(v.getNombre());
+            tabla.addCell(String.valueOf(v.getCaja()));
+            tabla.addCell(String.valueOf(v.getVentas()));
+            tabla.addCell(v.getGenero());
+            tabla.addCell(v.getPassword());
+        }
+
+        // Crear un objeto de tipo float array para el ancho de cada columna
+        float[] columnWidths = {2f, 2f, 2f, 2f, 2f, 4f};
+        tabla.setTotalWidth(columnWidths);
+        
+        documento.add(tabla);
+        documento.add(new Paragraph("\nDocumento creado el " + LocalDate.now()));
+        documento.close();
+        JOptionPane.showMessageDialog(null, "El archivo se creo correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);
+        try {
+            File sucursales_doc = new File("Vendedores.pdf");
             Desktop.getDesktop().open(sucursales_doc);
         } catch (Exception e) {
         }

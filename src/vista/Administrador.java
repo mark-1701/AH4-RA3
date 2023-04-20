@@ -12,15 +12,17 @@ import modelo.Cliente;
 import modelo.GenerarPDF;
 import modelo.Producto;
 import modelo.Sucursal;
+import modelo.Vendedor;
 import modeloDAO.ClienteDAO;
 import modeloDAO.ProductoDAO;
 //import modeloDAO.ClienteDAO;
 import modeloDAO.SucursalDAO;
+import modeloDAO.VendedorDAO;
 //import modeloDAO.VendedorDAO;
 
 public class Administrador extends javax.swing.JFrame {
 
-//    VendedorDAO dao = new VendedorDAO();
+    VendedorDAO daoV = new VendedorDAO();
     SucursalDAO daoS = new SucursalDAO();
     ProductoDAO daoP = new ProductoDAO();
     ClienteDAO daoC = new ClienteDAO();
@@ -38,7 +40,7 @@ public class Administrador extends javax.swing.JFrame {
         //DISENIOS TODAVIA NO PREPARADO
 //        this.getContentPane().setBackground(new Color(242, 242, 242));
 //        jPVendedores.setBackground(new Color(242, 242, 242));
-//        cargarVendedores();
+        cargarVendedores();
         cargarSucursales();
         cargarProductos();
         cargarCliente();
@@ -536,6 +538,11 @@ public class Administrador extends javax.swing.JFrame {
         pdfV.setText("Exportar lista a PDF");
         pdfV.setContentAreaFilled(false);
         pdfV.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pdfV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pdfVActionPerformed(evt);
+            }
+        });
 
         cargamasivaV.setForeground(new java.awt.Color(255, 255, 255));
         cargamasivaV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn.png"))); // NOI18N
@@ -543,6 +550,11 @@ public class Administrador extends javax.swing.JFrame {
         cargamasivaV.setContentAreaFilled(false);
         cargamasivaV.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cargamasivaV.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn2.png"))); // NOI18N
+        cargamasivaV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargamasivaVActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPVendedoresLayout = new javax.swing.GroupLayout(jPVendedores);
         jPVendedores.setLayout(jPVendedoresLayout);
@@ -627,16 +639,33 @@ public class Administrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void eliminarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarVActionPerformed
-
+        fila = jTableVendedores.getSelectedRow();
+        if (jTableVendedores.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Elige una opcion para eliminar", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int codigo = Integer.parseInt(jTableVendedores.getValueAt(fila, 0).toString());
+            daoV.delete(codigo);
+            this.dispose();
+            Administrador administrador = new Administrador();
+            administrador.setVisible(true);
+            administrador.jTabbedPane2.setSelectedIndex(3);
+        }
     }//GEN-LAST:event_eliminarVActionPerformed
 
     private void actualizarVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarVActionPerformed
-
+        fila = jTableVendedores.getSelectedRow();
+        if (jTableVendedores.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Elige una opcion para modificar", "Alerta", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int codigo = Integer.parseInt(jTableVendedores.getValueAt(fila, 0).toString());
+            this.dispose();
+            new ModificarVendedor(daoV.search(codigo)).setVisible(true);
+        }
     }//GEN-LAST:event_actualizarVActionPerformed
 
     private void crearVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearVActionPerformed
-//        this.dispose();
-//        new AgregarVendedor().setVisible(true);
+        this.dispose();
+        new AgregarVendedor().setVisible(true);
     }//GEN-LAST:event_crearVActionPerformed
 
     private void eliminarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarSActionPerformed
@@ -800,6 +829,27 @@ public class Administrador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cargamasivaCActionPerformed
 
+    private void pdfVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfVActionPerformed
+        try {
+            generarPDF.generarPDFVendedores();
+        } catch (Exception e) {
+            System.out.println("ERROR A GENERAR PDF VENDEDORES: " + e);
+        }
+    }//GEN-LAST:event_pdfVActionPerformed
+
+    private void cargamasivaVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargamasivaVActionPerformed
+        try {
+            cargaMasiva.carga_masiva(3);
+            this.dispose();
+            Administrador administrador = new Administrador();
+            administrador.setVisible(true);
+            administrador.jTabbedPane2.setSelectedIndex(3);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error en carga masiva", "Alerta", JOptionPane.WARNING_MESSAGE);
+            System.out.println("ERROR EN CARGA MASIVA: " + e);
+        }
+    }//GEN-LAST:event_cargamasivaVActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -920,8 +970,19 @@ public class Administrador extends javax.swing.JFrame {
     }
 
     public void cargarVendedores() {
-//        jTableVendedores.setModel(dao.listar());
-//        jScrollPane1.setViewportView(jTableVendedores);
+        String columnas[] = {"Codigo", "Nombre", "Caja", "Ventas", "Genero", "Password"};
+        tabla = new DefaultTableModel(null, columnas);
+        for (Vendedor V : daoV.listar()) {
+            Object fila[] = new Object[7];
+            fila[0] = V.getCodigo();
+            fila[1] = V.getNombre();
+            fila[2] = V.getCaja();
+            fila[3] = V.getVentas();
+            fila[4] = V.getGenero();
+            fila[5] = V.getPassword();    
+            tabla.addRow(fila);
+        }
+        jTableVendedores.setModel(tabla);
 
         /*
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
