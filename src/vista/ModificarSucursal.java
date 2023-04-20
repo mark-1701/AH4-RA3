@@ -57,7 +57,7 @@ public class ModificarSucursal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel1.setText("Modificar Sucursal");
+        jLabel1.setText("Modificar sucursal");
 
         jLabel3.setText("Nombre");
 
@@ -80,7 +80,6 @@ public class ModificarSucursal extends javax.swing.JFrame {
         btnCrear.setText("Modificar");
         btnCrear.setContentAreaFilled(false);
         btnCrear.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCrear.setRolloverEnabled(false);
         btnCrear.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn2.png"))); // NOI18N
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

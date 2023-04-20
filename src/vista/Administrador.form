@@ -729,6 +729,9 @@
                   <Image iconType="3" name="/img/btn2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cargamasivaCActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="eliminarC">
               <Properties>
@@ -764,6 +767,9 @@
                   <Image iconType="3" name="/img/btnLargo2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pdfCActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

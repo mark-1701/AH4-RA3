@@ -3,25 +3,19 @@ package vista;
 import java.awt.Color;
 import java.awt.event.*;
 import javax.swing.JOptionPane;
-import modelo.Producto;
-import modeloDAO.ProductoDAO;
+import modelo.Cliente;
+import modeloDAO.ClienteDAO;
 
-public class ModificarProducto extends javax.swing.JFrame {
+public class AgregarCliente extends javax.swing.JFrame {
 
-    ProductoDAO dao = new ProductoDAO();
-    int codigo = 0;
+    ClienteDAO dao = new ClienteDAO();
 
-    public ModificarProducto(Producto producto) {
+    public AgregarCliente() {
         initComponents();
         setResizable(false);
-        setTitle("Modificar Producto");
+        setTitle("Agregar Cliente");
         setLocationRelativeTo(null);
         this.getContentPane().setBackground(new Color(242, 242, 242));
-        codigo = producto.getCodigo();
-        txtNombre.setText(producto.getNombre());
-        txtDescripcion.setText(producto.getDescripcion());
-        txtCantidad.setText(String.valueOf(producto.getCantidad()));
-        txtPrecio.setText(String.valueOf(producto.getPrecio()));
         cerrar();
     }
 
@@ -31,7 +25,7 @@ public class ModificarProducto extends javax.swing.JFrame {
                 public void windowClosing(WindowEvent e) {
                     Administrador administrador = new Administrador();
                     administrador.setVisible(true);
-                    administrador.jTabbedPane2.setSelectedIndex(1);
+                    administrador.jTabbedPane2.setSelectedIndex(2);
                 }
             });
         } catch (Exception e) {
@@ -49,35 +43,35 @@ public class ModificarProducto extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        txtDescripcion = new javax.swing.JTextField();
-        txtCantidad = new javax.swing.JTextField();
-        txtPrecio = new javax.swing.JTextField();
+        txtNIT = new javax.swing.JTextField();
+        txtCorreo = new javax.swing.JTextField();
+        txtGenero = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel1.setText("Modificar producto");
+        jLabel1.setText("Crear nueva cliente");
 
         jLabel3.setText("Nombre");
 
-        jLabel4.setText("Descripcion");
+        jLabel4.setText("NIT");
 
-        jLabel5.setText("Cantidad");
+        jLabel5.setText("Correo");
 
-        jLabel6.setText("Precio");
+        jLabel6.setText("Genero");
 
         txtNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        txtDescripcion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtNIT.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        txtCantidad.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtCorreo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
-        txtPrecio.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        txtGenero.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
         btnCrear.setForeground(new java.awt.Color(255, 255, 255));
         btnCrear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn.png"))); // NOI18N
-        btnCrear.setText("Modificar");
+        btnCrear.setText("Crear");
         btnCrear.setContentAreaFilled(false);
         btnCrear.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCrear.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/btn2.png"))); // NOI18N
@@ -101,16 +95,16 @@ public class ModificarProducto extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtNombre)
-                                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
+                        .addGap(129, 129, 129)
                         .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -126,15 +120,15 @@ public class ModificarProducto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNIT, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
@@ -144,20 +138,20 @@ public class ModificarProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        if (txtNombre.getText().isEmpty() || txtDescripcion.getText().isEmpty() || txtCantidad.getText().isEmpty()
-            || txtPrecio.getText().isEmpty()) {
+        if (txtNombre.getText().isEmpty() || txtNIT.getText().isEmpty() || txtCorreo.getText().isEmpty()
+            || txtGenero.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debes de rellenar todas las opciones", "Alerta", JOptionPane.WARNING_MESSAGE);
         } else {
             String nombre = txtNombre.getText();
-            String descripcion = txtDescripcion.getText();
-            int cantidad = Integer.parseInt(txtCantidad.getText());
-            float precio = Float.parseFloat(txtPrecio.getText());
-            Producto producto = new Producto(codigo, nombre, descripcion, cantidad, precio);
-            dao.edit(producto);
+            String nit = txtNIT.getText();
+            String correo = txtCorreo.getText();
+            String genero = txtGenero.getText();
+            Cliente cliente = new Cliente(0, nombre, nit, correo, genero);
+            dao.add(cliente);
             this.dispose();
             Administrador administrador = new Administrador();
             administrador.setVisible(true);
-            administrador.jTabbedPane2.setSelectedIndex(1);
+            administrador.jTabbedPane2.setSelectedIndex(2);
         }
     }//GEN-LAST:event_btnCrearActionPerformed
 
@@ -175,13 +169,13 @@ public class ModificarProducto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModificarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModificarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModificarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModificarProducto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -191,7 +185,7 @@ public class ModificarProducto extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModificarProducto(null).setVisible(true);
+                new AgregarCliente().setVisible(true);
             }
         });
     }
@@ -203,9 +197,9 @@ public class ModificarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtGenero;
+    private javax.swing.JTextField txtNIT;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

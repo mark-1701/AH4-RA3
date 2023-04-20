@@ -30,23 +30,23 @@
           </Group>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel6" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
-                          <Component id="txtTelefono" alignment="0" min="-2" pref="340" max="-2" attributes="0"/>
+                          <Component id="txtGenero" alignment="0" min="-2" pref="340" max="-2" attributes="0"/>
                           <Component id="jLabel5" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
                           <Component id="txtCorreo" alignment="0" min="-2" pref="340" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel4" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
                               <Component id="txtNombre" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtDireccion" alignment="0" min="-2" pref="340" max="-2" attributes="0"/>
+                              <Component id="txtNIT" alignment="0" min="-2" pref="340" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -66,7 +66,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="txtDireccion" min="-2" pref="34" max="-2" attributes="0"/>
+              <Component id="txtNIT" min="-2" pref="34" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -74,7 +74,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="txtTelefono" min="-2" pref="34" max="-2" attributes="0"/>
+              <Component id="txtGenero" min="-2" pref="34" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="btnCrear" min="-2" pref="34" max="-2" attributes="0"/>
               <EmptySpace pref="33" max="32767" attributes="0"/>
@@ -88,7 +88,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Modificar sucursal"/>
+        <Property name="text" type="java.lang.String" value="Modificar cliente"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -98,7 +98,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Direccion"/>
+        <Property name="text" type="java.lang.String" value="NIT"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -108,7 +108,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Telefono"/>
+        <Property name="text" type="java.lang.String" value="Genero"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtNombre">
@@ -118,7 +118,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtDireccion">
+    <Component class="javax.swing.JTextField" name="txtNIT">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="0"/>
@@ -132,7 +132,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtTelefono">
+    <Component class="javax.swing.JTextField" name="txtGenero">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="14" style="0"/>

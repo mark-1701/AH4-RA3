@@ -6,6 +6,7 @@ import java.text.ParseException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import modeloDAO.ClienteDAO;
 import modeloDAO.ProductoDAO;
 import modeloDAO.SucursalDAO;
 
@@ -13,6 +14,7 @@ public class CargaMasiva {
 
     SucursalDAO daoS = new SucursalDAO();
     ProductoDAO daoP = new ProductoDAO();
+    ClienteDAO daoC = new ClienteDAO();
     
     private String leerarchivo() {
         JFileChooser fc = new JFileChooser();
@@ -79,6 +81,14 @@ public class CargaMasiva {
                 float precio = Float.parseFloat(object.get("precio").getAsString());
                 Producto pro = new Producto(codigo, nombre, descripcion, cantidad, precio);
                 daoP.add(pro);
+            } else if (tipo == 2) {
+                int codigo = 0;
+                String nombre = object.get("nombre").getAsString();
+                String nit = object.get("nit").getAsString();
+                String correo = object.get("correo").getAsString();
+                String genero = object.get("genero").getAsString();
+                Cliente cli = new Cliente(codigo, nombre, nit, correo, genero);
+                daoC.add(cli);
             }
         }
         JOptionPane.showMessageDialog(null, "Se hizo la carga masiva correctamente", "Alerta", JOptionPane.WARNING_MESSAGE);
