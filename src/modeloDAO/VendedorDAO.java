@@ -1,17 +1,19 @@
 package modeloDAO;
 
 import config.Conexion;
+import interfaces.CRUDVendedor;
 import java.sql.*;
 import java.util.LinkedList;
 import modelo.Vendedor;
 
-public class VendedorDAO {
+public class VendedorDAO implements CRUDVendedor{
     Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     Vendedor v = new Vendedor();
     
+    @Override
     public LinkedList<Vendedor> listar() {
         LinkedList<Vendedor> lista = new LinkedList<Vendedor>();
         String sql = "SELECT * FROM vendedores";
@@ -36,6 +38,7 @@ public class VendedorDAO {
         return lista;
     }
     
+    @Override
     public void add(Vendedor vendedor) {
         String query = "INSERT INTO vendedores VALUES (0,?,?,?,?,?);";
         try {
@@ -52,6 +55,7 @@ public class VendedorDAO {
         }
     }
     
+    @Override
     public Vendedor search(int codigo) {
         String sql = "SELECT * FROM vendedores WHERE codigo = " + codigo;
         try {
@@ -72,6 +76,7 @@ public class VendedorDAO {
         return v;  
     }
     
+    @Override
     public void edit(Vendedor vendedor) {
         String query = "UPDATE vendedores SET nombre=?, caja=?, ventas=?, genero=?, password=? WHERE codigo=?;";
         try {
@@ -89,6 +94,7 @@ public class VendedorDAO {
         }
     }
     
+    @Override
     public void delete(int codigo) {
         String sql = "DELETE from vendedores WHERE codigo=?";
         try {

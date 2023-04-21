@@ -1,17 +1,19 @@
 package modeloDAO;
 
 import config.Conexion;
+import interfaces.CRUDCliente;
 import java.sql.*;
 import java.util.LinkedList;
 import modelo.Cliente;
 
-public class ClienteDAO {
+public class ClienteDAO implements CRUDCliente{
     Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs; 
     Cliente c = new Cliente();
     
+    @Override
     public LinkedList<Cliente> listar() {
         LinkedList<Cliente> lista = new LinkedList<Cliente>();
         String sql = "SELECT * FROM clientes";
@@ -35,6 +37,7 @@ public class ClienteDAO {
         return lista;
     }
     
+    @Override
     public void add(Cliente cliente) {
         String query = "INSERT INTO clientes VALUES (0,?,?,?,?);";
         try {
@@ -50,6 +53,7 @@ public class ClienteDAO {
         }
     }
     
+    @Override
     public Cliente search(int codigo) {
         String sql = "SELECT * FROM clientes WHERE codigo = " + codigo;
         try {
@@ -69,6 +73,7 @@ public class ClienteDAO {
         return c;  
     }
     
+    @Override
     public void edit(Cliente cliente) {
         String query = "UPDATE clientes SET nombre=?, nit=?, correo=?, genero=? WHERE codigo=?;";
         try {
@@ -85,6 +90,7 @@ public class ClienteDAO {
         }
     }
     
+    @Override
     public void delete(int codigo) {
         String sql = "DELETE from clientes WHERE codigo=?";
         try {
